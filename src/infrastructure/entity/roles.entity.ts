@@ -28,6 +28,6 @@ export class Role {
   @Column({ name: 'deleted', default: false })
   deleted!: boolean;
 
-   @OneToMany(() => User, user => user.role)
+   @OneToMany(() => User, user => user.rol)
   users: User[];
 }
