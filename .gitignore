@@ -13,10 +13,6 @@ pnpm-debug.log
 dist/
 build/
 
-# Archivos de entorno
-.env
-.env.local
-.env.*.local
 
 # Logs
 *.log

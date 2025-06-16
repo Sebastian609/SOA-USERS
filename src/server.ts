@@ -12,10 +12,12 @@ import { UserService } from "./service/user.service";
 import { UserRepository } from "./repository/users.repository";
 import { User } from "./infrastructure/entity/users.entity";
 import { AppDataSource } from "./infrastructure/database/database";
+import { setupSwagger } from "./config/swagger";
 
 const PORT = 2221;
 const app = express();
 const httpServer = createServer(app);
+setupSwagger(app);
 
 const io = new Server(httpServer, {
   cors: {

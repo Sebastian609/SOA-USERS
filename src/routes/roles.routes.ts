@@ -3,7 +3,6 @@ import express from "express";
 import { Router } from "express";
 import { RoleController } from "../infrastructure/controller/roles.controller";
 
-
 const router = express.Router();
 const roleController = new RoleController();
 

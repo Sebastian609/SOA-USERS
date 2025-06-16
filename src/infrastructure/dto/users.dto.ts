@@ -1,5 +1,5 @@
-import { Expose } from 'class-transformer';
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { Expose } from "class-transformer";
+import { IsNotEmpty, IsString, IsNumber, IsOptional } from "class-validator";
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -9,17 +9,13 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  @Expose()
-  username: string;
+  @Expose({ name: "lastname" })
+  lastname: string;
 
   @IsNotEmpty()
   @IsString()
-  @Expose({ name: 'first_lastname' })
-  firstLastname: string;
-
-  @IsString()
-  @Expose({ name: 'second_lastname' })
-  secondLastname: string;
+  @Expose({ name: "email" })
+  email: string;
 
   @IsNotEmpty()
   @IsString()
@@ -28,39 +24,33 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsNumber()
-  @Expose({ name: 'role_id' })
-  roleId: number;
+  @Expose({ name: "rol_id" })
+  rolId: number;
 }
 
-
 export class UpdateUserDto {
-
   @IsNotEmpty()
   @IsNumber()
   @Expose()
   id: number;
 
-  @IsNotEmpty()
   @IsString()
   @Expose()
-  name: string;
+  @IsOptional()
+  name?: string;
 
-  @IsNotEmpty()
   @IsString()
   @Expose()
-  username: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @Expose({ name: 'first_lastname' })
-  firstLastname: string;
+  @IsOptional()
+  email?: string;
 
   @IsString()
-  @Expose({ name: 'second_lastname' })
-  secondLastname: string;
+  @Expose()
+  @IsOptional()
+  lastname?: string;
 
-  @IsNotEmpty()
   @IsNumber()
-  @Expose({ name: 'role_id' })
-  roleId: number;
+  @IsOptional()
+  @Expose({ name: "rol_id" })
+  rolId?: number;
 }

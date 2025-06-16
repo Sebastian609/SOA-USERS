@@ -1,50 +1,47 @@
-import { 
-  Entity, 
-  PrimaryGeneratedColumn, 
-  Column, 
-  CreateDateColumn, 
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  JoinColumn
-} from 'typeorm';
-import { Role } from './roles.entity'; // Make sure this import path is correct
+  JoinColumn,
+} from "typeorm";
+import { Role } from "./roles.entity"; // Make sure this import path is correct
 
-@Entity('tbl_users')
+@Entity("tbl_users")
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: "user_id" })
   id: number;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
-  @Column('text')
+  @Column("text")
   password: string;
 
-  @Column({ name: 'name', length: 80 })
+  @Column({ name: "name" })
   name: string;
 
-  @Column({ name: 'first_lastname', length: 80 })
-  firstLastname: string;
+  @Column({ name: "lastname" })
+  lastname: string;
 
-  @Column({ name: 'second_lastname', length: 80, nullable: true })
-  secondLastname: string | null;
+  @Column({ name: "email" })
+  email: string;
 
-  @Column({ length: 20 })
-  username: string;
-
-  @Column({ name: 'is_active', default: true })
+  @Column({ name: "is_active" })
   isActive: boolean;
 
-  @Column({name: 'role_id'})
-  roleId: number;
+  @Column({ name: "rol_id" })
+  rolId: number;
 
-  @Column({name: 'deleted',default: false})
+  @Column({ name: "deleted" })
   deleted: boolean;
 
-  @ManyToOne(() => Role, { nullable: false })
-  @JoinColumn({ name: 'role_id' })
-  role: Role;
-}   
+  @ManyToOne(() => Role)
+  @JoinColumn({ name: "rol_id" })
+  rol: Role;
+}

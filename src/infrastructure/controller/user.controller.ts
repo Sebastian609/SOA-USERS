@@ -10,6 +10,8 @@ export class UserController {
     this.userService = service;
   }
 
+  
+
   async softDelete(req: Request, res: Response) {
     try {
       const { id } = req.params;

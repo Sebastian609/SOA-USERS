@@ -4,6 +4,7 @@ import { UserRepository } from "../repository/users.repository";
 import { CreateUserDto, UpdateUserDto } from "../infrastructure/dto/users.dto";
 import { comparePassword, hashPassword } from "../utils/bcrip.util";
 import { plainToInstance } from "class-transformer";
+import { getPaginated } from "../utils/getPaginated";
 
 export class UserService {
   constructor(private readonly UserRepository: UserRepository) {}
@@ -44,10 +45,10 @@ export class UserService {
    */
   async createUser(userData: CreateUserDto): Promise<User> {
     const user = plainToInstance(User, userData);
-    const userExists = await this.UserRepository.findByUsername(user.username);
+    const userExists = await this.UserRepository.findByEmail(user.email);
 
     if (userExists) {
-      throw new Error(`Username with ${userData.username} allready exists.`);
+      throw new Error(`email with ${userData.name} allready exists.`);
     }
 
     user.password = await hashPassword(userData.password);
@@ -57,12 +58,12 @@ export class UserService {
   async update(userData: UpdateUserDto): Promise<User> {
     const user = plainToInstance(User, userData);
     const currentUser = await this.UserRepository.findById(userData.id);
-    const usernameUsed = await this.UserRepository.findByUsername(
-      user.username
+    const usedEmail = await this.UserRepository.findByEmail(
+      user.email
     );
 
-    if (user.username && usernameUsed && usernameUsed.id !== currentUser.id) {
-      throw new Error(`Username "${userData.username}" is already in use.`);
+    if (user.email && usedEmail && usedEmail.id !== currentUser.id) {
+      throw new Error(`email "${userData.email}" is already in use.`);
     }
 
     return this.UserRepository.update(user.id, user);
@@ -87,23 +88,7 @@ export class UserService {
   }
 
   async getPaginated(page: number, itemsPerPage: number) {
-    const offset = page * itemsPerPage;
-    const limit = itemsPerPage;
+    return getPaginated<User>(this.UserRepository,page,itemsPerPage)
 
-    const [items, totalCount] = await Promise.all([
-      this.UserRepository.getPaginated(limit, offset),
-      this.UserRepository.count({deleted: false}),
-    ]);
-    return {
-      response: items,
-      pagination: {
-        currentPage: page,
-        itemsPerPage,
-        totalItems: totalCount,
-        totalPages: Math.ceil(totalCount / itemsPerPage),
-        hasNextPage: (page + 1) * itemsPerPage < totalCount,
-        hasPreviousPage: page > 0,
-      },
-    };
   }
 }

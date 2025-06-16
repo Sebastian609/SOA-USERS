@@ -10,7 +10,7 @@ import { User } from './users.entity';
 
 @Entity('tbl_roles')
 export class Role {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({name: 'rol_id'})
   id!: number;
 
   @Column({ length: 255 })
@@ -24,6 +24,9 @@ export class Role {
 
   @Column({ name: 'is_active', default: true })
   isActive!: boolean;
+
+  @Column({ name: 'deleted', default: false })
+  deleted!: boolean;
 
    @OneToMany(() => User, user => user.role)
   users: User[];

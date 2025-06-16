@@ -17,7 +17,7 @@ export class UserRepository implements IBaseRepository<User> {
       skip: offset,
       take: limit,
       relations: {
-        role: true,
+        rol: true,
       },
       order: {
         createdAt: "DESC",
@@ -79,7 +79,7 @@ export class UserRepository implements IBaseRepository<User> {
         id: id,
       },
       relations: {
-        role: true,
+        rol: true,
       },
     });
     return updatedUser;
@@ -108,8 +108,8 @@ export class UserRepository implements IBaseRepository<User> {
     return this.repository.findOne({ where: { name } });
   }
 
-  async findByUsername(username: string): Promise<User | null> {
-    return this.repository.findOne({ where: { username: username } });
+  async findByEmail(email: string): Promise<User | null> {
+    return this.repository.findOne({ where: { email: email } });
   }
 
   async findActiveUsers(): Promise<User[]> {
