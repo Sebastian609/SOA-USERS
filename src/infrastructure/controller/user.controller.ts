@@ -2,6 +2,7 @@
 import { Request, Response } from "express";
 import { CreateUserDto, UpdateUserDto } from "../dto/users.dto";
 import { UserService } from "../../service/user.service";
+import { plainToInstance } from "class-transformer";
 
 export class UserController {
   private readonly userService: UserService;
@@ -85,7 +86,9 @@ export class UserController {
 
   async updateUser(req: Request, res: Response) {
     try {
-      const data: UpdateUserDto = req.body;
+      const data = plainToInstance(UpdateUserDto, req.body, {
+        excludeExtraneousValues: true 
+      });
       const newUser = await this.userService.update(data);
       res.status(201).json(newUser);
     } catch (error) {
