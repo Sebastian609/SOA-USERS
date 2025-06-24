@@ -14,6 +14,16 @@ const options = {
     },
     components: {
       schemas: {
+         UserLoginDto: {
+          type: "object",
+          required: ["email", "password"],
+          properties: {
+
+            email: { type: "string", example: "juan@example.com" },
+            password: { type: "string", example: "123456" },
+    
+          },
+        },
         CreateUserDto: {
           type: "object",
           required: ["name", "lastname", "email", "password", "rolId"],

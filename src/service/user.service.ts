@@ -57,12 +57,10 @@ export class UserService {
 
   async update(userData: UpdateUserDto): Promise<User> {
     const user = plainToInstance(User, userData);
-    const currentUser = await this.UserRepository.findById(userData.id);
-    const usedEmail = await this.UserRepository.findByEmail(
-      user.email
-    );
+    const { id } = await this.UserRepository.findById(userData.id);
+    const usedEmail = await this.UserRepository.findByEmail(user.email);
 
-    if (user.email && usedEmail && usedEmail.id !== currentUser.id) {
+    if (user.email && usedEmail && usedEmail.id !== id) {
       throw new Error(`email "${userData.email}" is already in use.`);
     }
 
@@ -78,6 +76,15 @@ export class UserService {
     return await this.UserRepository.updatePassword(id, hashedPassword);
   }
 
+  async login(email: string, password: string): Promise<User> {
+    const user = await this.UserRepository.findByEmail(email);
+    const isPasswordValid = await comparePassword(password, user.password);
+    if (!isPasswordValid) {
+      throw new Error("Invalid email or password");
+    }
+    return user;
+  }
+
   async softDelete(id: number) {
     const exists = await this.UserRepository.findById(id);
 
@@ -88,7 +95,6 @@ export class UserService {
   }
 
   async getPaginated(page: number, itemsPerPage: number) {
-    return getPaginated<User>(this.UserRepository,page,itemsPerPage)
-
+    return getPaginated<User>(this.UserRepository, page, itemsPerPage);
   }
 }

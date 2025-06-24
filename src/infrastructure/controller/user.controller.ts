@@ -36,6 +36,24 @@ export class UserController {
     }
   }
 
+  async login(req: Request, res: Response) { 
+    try {
+      const loginData = plainToInstance(CreateUserDto, req.body, {
+        excludeExtraneousValues: true
+      });
+    
+      if (!loginData.email || !loginData.password) {
+        throw new Error("Email and password are required");
+      }
+
+      const user = await  this.userService.login(loginData.email, loginData.password );
+
+      return res.status(200).json(user);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+
   async getById(req: Request, res: Response) {
     try {
       const { id } = req.params;

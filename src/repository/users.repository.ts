@@ -44,6 +44,7 @@ export class UserRepository implements IBaseRepository<User> {
     return this.repository.find();
   }
 
+  
   async findById(id: number): Promise<User> {
     const User = this.repository.findOneBy({ id });
     if (!User) {
@@ -109,7 +110,7 @@ export class UserRepository implements IBaseRepository<User> {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.repository.findOne({ where: { email: email } });
+    return this.repository.findOneOrFail({ where: { email: email,deleted: false, isActive: true }, relations: ['rol'] });
   }
 
   async findActiveUsers(): Promise<User[]> {

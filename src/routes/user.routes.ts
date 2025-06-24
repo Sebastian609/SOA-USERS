@@ -135,29 +135,30 @@ export class UserRoutes {
      */
     this.router.get("/:id", this.controller.getById.bind(this.controller));
 
-    /**
-     * @swagger
-     * /users/{id}:
-     *   delete:
-     *     summary: Eliminar un usuario por ID (soft delete)
-     *     tags: [Users]
-     *     parameters:
-     *       - in: path
-     *         name: id
-     *         required: true
-     *         schema:
-     *           type: integer
-     *           example: 1
-     *     responses:
-     *       200:
-     *         description: Usuario eliminado correctamente
-     *       400:
-     *         description: Error al eliminar el usuario
-     */
-    this.router.delete("/:id", this.controller.softDelete.bind(this.controller));
-  }
+   /**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: Iniciar sesión de usuario
+ *     description: Inicia sesión de un usuario existente
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserLoginDto'
+ *     responses:
+ *       200:
+ *         description: Login exitoso
+ *       400:
+ *         description: Credenciales inválidas
+ */
+this.router.post("/login", this.controller.login.bind(this.controller));
 
-  public getRoutes(): Router {
+}
+
+  public  getRoutes(): Router {
     return this.router;
   }
 }

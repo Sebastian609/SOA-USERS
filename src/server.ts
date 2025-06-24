@@ -19,15 +19,6 @@ const app = express();
 const httpServer = createServer(app);
 setupSwagger(app);
 
-const io = new Server(httpServer, {
-  cors: {
-    origin: "*",
-  },
-});
-
-const socketService = new SocketService(io);
-const socketController = new SocketController(io);
-const socketRoutes = new SocketRoutes(socketController);
 const roleRoutes = new RolesRoutes(new RoleController());
 const userRoutes = new UserRoutes(
   new UserController(
@@ -36,12 +27,9 @@ const userRoutes = new UserRoutes(
 );
 
 app.use(express.json());
-app.use("/api", socketRoutes.getRoutes());
-app.use("/api/roles", roleRoutes.getRoutes());
-app.use("/api/users", userRoutes.getRoutes());
-io.on("connection", (socket) => {
-  socketService.handleConnection(socket);
-});
+
+app.use("/roles", roleRoutes.getRoutes());
+app.use("/", userRoutes.getRoutes());
 
 httpServer.listen(PORT, () => {
   console.log(`running on port ${PORT}`);
