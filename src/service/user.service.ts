@@ -78,6 +78,9 @@ export class UserService {
 
   async login(email: string, password: string): Promise<User> {
     const user = await this.UserRepository.findByEmail(email);
+    if(!user){
+      throw new Error("Invalid email or password");
+    }
     const isPasswordValid = await comparePassword(password, user.password);
     if (!isPasswordValid) {
       throw new Error("Invalid email or password");

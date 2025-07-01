@@ -1,9 +1,5 @@
 import express from "express";
 import { createServer } from "http";
-import { Server } from "socket.io";
-import { SocketRoutes } from "./routes/socket.routes";
-import { SocketController } from "./infrastructure/controller/socket.controller";
-import { SocketService } from "./service/socket.service";
 import { RolesRoutes } from "./routes/roles.routes";
 import { RoleController } from "./infrastructure/controller/roles.controller";
 import { UserController } from "./infrastructure/controller/user.controller";
@@ -28,8 +24,8 @@ const userRoutes = new UserRoutes(
 
 app.use(express.json());
 
-app.use("/roles", roleRoutes.getRoutes());
-app.use("/", userRoutes.getRoutes());
+app.use("/api/users/roles", roleRoutes.getRoutes());
+app.use("/api/users", userRoutes.getRoutes());
 
 httpServer.listen(PORT, () => {
   console.log(`running on port ${PORT}`);

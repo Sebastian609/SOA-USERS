@@ -110,7 +110,7 @@ export class UserRepository implements IBaseRepository<User> {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.repository.findOneOrFail({ where: { email: email,deleted: false, isActive: true }, relations: ['rol'] });
+    return this.repository.findOne({ where: { email: email,deleted: false, isActive: true }, relations: ['rol'] });
   }
 
   async findActiveUsers(): Promise<User[]> {
