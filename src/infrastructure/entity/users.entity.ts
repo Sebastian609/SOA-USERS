@@ -32,13 +32,13 @@ export class User {
   @Column({ name: "email" })
   email: string;
 
-  @Column({ name: "is_active" })
+  @Column({ name: "is_active",default: true })
   isActive: boolean;
 
   @Column({ name: "rol_id" })
   rolId: number;
 
-  @Column({ name: "deleted" })
+  @Column({ name: "deleted" ,default: false})
   deleted: boolean;
 
   @ManyToOne(() => Role)

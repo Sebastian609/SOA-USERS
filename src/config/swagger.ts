@@ -32,6 +32,7 @@ const options = {
             lastname: { type: "string", example: "Pérez" },
             email: { type: "string", example: "juan@example.com" },
             password: { type: "string", example: "123456" },
+            documentNumber: { type: "string", example: "76228414" },
             rolId: { type: "integer", example: 2 },
           },
         },

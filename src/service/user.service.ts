@@ -45,6 +45,8 @@ export class UserService {
    */
   async createUser(userData: CreateUserDto): Promise<User> {
     const user = plainToInstance(User, userData);
+    user.isActive = true
+    user.deleted = false
     const userExists = await this.UserRepository.findByEmail(user.email);
 
     if (userExists) {

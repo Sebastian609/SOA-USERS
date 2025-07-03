@@ -17,6 +17,12 @@
     @Expose({ name: "email" })
     email: string;
 
+
+    @IsNotEmpty()
+    @IsString()
+    @Expose({ name: "documentNumber" })
+    documentNumber: string;
+
     @IsNotEmpty()
     @IsString()
     @Expose()
@@ -24,7 +30,7 @@
 
     @IsNotEmpty()
     @IsNumber()
-    @Expose({ name: "rol_id" })
+    @Expose({ name: "rolId" })
     rolId: number;
   }
 

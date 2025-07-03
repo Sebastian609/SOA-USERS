@@ -20,7 +20,7 @@ export class UserRepository implements IBaseRepository<User> {
         rol: true,
       },
       order: {
-        createdAt: "DESC",
+        createdAt: "ASC",
       },
       where: {
         deleted: false,
