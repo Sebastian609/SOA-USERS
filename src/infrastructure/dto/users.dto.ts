@@ -63,6 +63,6 @@
 
     @IsNumber()
     @IsOptional()
-    @Expose({ name: "rol_id" })
+    @Expose()
     rolId?: number;
   }

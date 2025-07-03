@@ -107,6 +107,10 @@ export class UserController {
       const data = plainToInstance(UpdateUserDto, req.body, {
         excludeExtraneousValues: true 
       });
+
+      console.log(req.body);
+      
+
       const newUser = await this.userService.update(data);
       res.status(201).json(newUser);
     } catch (error) {
