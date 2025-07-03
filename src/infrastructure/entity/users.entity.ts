@@ -29,6 +29,9 @@ export class User {
   @Column({ name: "lastname" })
   lastname: string;
 
+  @Column({ name: "document_number" })
+  documentNumber: string;
+
   @Column({ name: "email" })
   email: string;
 

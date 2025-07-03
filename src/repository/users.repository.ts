@@ -20,7 +20,7 @@ export class UserRepository implements IBaseRepository<User> {
         rol: true,
       },
       order: {
-        createdAt: "ASC",
+        createdAt: "DESC",
       },
       where: {
         deleted: false,
@@ -46,7 +46,12 @@ export class UserRepository implements IBaseRepository<User> {
 
   
   async findById(id: number): Promise<User> {
-    const User = this.repository.findOneBy({ id });
+    const User = await this.repository.findOne({
+      where: { id },
+      relations: {
+        rol: true,
+      },
+    });
     if (!User) {
       throw new Error(`User with ID ${id} not found`);
     }

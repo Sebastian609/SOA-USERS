@@ -60,6 +60,9 @@ export class UserController {
       const userId = id as unknown as number;
 
       const user = await this.userService.getUserById(userId);
+      console.log(
+        user
+      );
       res.status(200).json(user);
     } catch (error) {
       res.status(400).json({ message: error.message });
